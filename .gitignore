@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# C compiled artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.dSYM/
+experiments/E44
+experiments/E45
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+.ipynb_checkpoints/
+
+# Editor swap / backup
+*.swp
+*.swo
+*~
+
+# Secrets / env
+.env
+.env.*
+
+# Logs
+*.log
