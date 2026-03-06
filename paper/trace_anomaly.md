@@ -777,9 +777,9 @@ Aitken $\Delta^2$ on the cancellation series $f(d)$ (§4.2) yields $\sum f \appr
 
 ### Companion Papers (this series)
 
-3. [A] Companion paper: *Spectral Theory of Carries in Positional Multiplication*. (Foundation: the m-bit Equidistribution Lemma extending Diaconis–Fulman; eigenvalue structure used throughout §2.5, §6, §7.)
-4. [B] Companion paper: *Carry Polynomials and the Euler Product: An Approximation Framework*. (Central approximation framework; the Carry Representation Theorem and trace anomaly coefficient $c_1 = \pi/18$.)
-5. [F] Companion paper: *Exact Covariance Structure of Binary Carry Chains*. (Exact second-order structure; the bit-sharing correlations underlying the LMH perturbation §6.3.)
-6. [P1] Companion paper: *π from Pure Arithmetic: A Spectral Phase Transition in the Binary Carry Bridge*. (The spectral phase-transition narrative; introduces the conjecture $R(K) \to -\pi$ and the Carry Bridge framework.)
-7. [P2] Companion paper: *The Sector Ratio in Binary Multiplication: From Markov Failure to Transcendence*. (Defines the sector ratio $R(K)$; provides the exact enumeration data and the Markov-failure structural decomposition used in §3 and Appendix A.)
-8. [G] Companion paper: *The Angular Uniqueness of Base 2 in Positional Multiplication*. (Proves that the straight D-parity boundary $\alpha + \beta = \pi/4$ is unique to base 2; the angular coordinates of §2.2 originate here.)
+3. [A] Companion paper: *Spectral Theory of Carries in Positional Multiplication*. (Foundation: the m-bit Equidistribution Lemma extending Diaconis–Fulman; eigenvalue structure used throughout §2.5, §6, §7.). doi:10.5281/zenodo.18895593
+4. [B] Companion paper: *Carry Polynomials and the Euler Product: An Approximation Framework*. (Central approximation framework; the Carry Representation Theorem and trace anomaly coefficient $c_1 = \pi/18$.). doi:10.5281/zenodo.18895597
+5. [F] Companion paper: *Exact Covariance Structure of Binary Carry Chains*. (Exact second-order structure; the bit-sharing correlations underlying the LMH perturbation §6.3.). doi:10.5281/zenodo.18895607
+6. [P1] Companion paper: *π from Pure Arithmetic: A Spectral Phase Transition in the Binary Carry Bridge*. (The spectral phase-transition narrative; introduces the conjecture $R(K) \to -\pi$ and the Carry Bridge framework.). doi:10.5281/zenodo.18895611
+7. [P2] Companion paper: *The Sector Ratio in Binary Multiplication: From Markov Failure to Transcendence*. (Defines the sector ratio $R(K)$; provides the exact enumeration data and the Markov-failure structural decomposition used in §3 and Appendix A.). doi:10.5281/zenodo.18895615
+8. [G] Companion paper: *The Angular Uniqueness of Base 2 in Positional Multiplication*. (Proves that the straight D-parity boundary $\alpha + \beta = \pi/4$ is unique to base 2; the angular coordinates of §2.2 originate here.). doi:10.5281/zenodo.18895601
