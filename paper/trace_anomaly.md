@@ -69,21 +69,21 @@ identified by high-precision PSLQ and verified to 6 digits by exact enumeration.
 
 ### 2.1 The Multiplication Domain
 
-For operands $u, v \in [0, 1)$ with $K$-bit binary expansions, we write $U = 1 + u$, $V = 1 + v$ so that $U, V \in [1, 2)$.  The product $P = U \cdot V \in [1, 4)$ has $D$ bits in its integer part, where $D \in \{1, 2\}$.  We say the pair $(u, v)$ is **D-odd** if $D = 1$, i.e.,
+For operands $u, v \in [0, 1)$ with $K$-bit binary expansions, we write $U = 1 + u$, $V = 1 + v$ so that $U, V \in [1, 2)$.  The product $P = U \cdot V \in [1, 4)$ has $D$ bits in its integer part, where $D \in \lbrace{}1, 2\rbrace{}$.  We say the pair $(u, v)$ is **D-odd** if $D = 1$, i.e.,
 
-$$\Omega = \{(u, v) : (1 + u)(1 + v) < 2\} = \left\{(u, v) : v < \frac{1 - u}{1 + u}\right\}.$$
+$$\Omega = \lbrace{}(u, v) : (1 + u)(1 + v) < 2\rbrace{} = \bigl\lbrace{}(u, v) : v < \frac{1 - u}{1 + u}\bigr\rbrace{}.$$
 
 ### 2.2 Angular Coordinates
 
 The substitution $u = \tan\alpha$, $v = \tan\beta$ [G] maps $\Omega$ to the triangle
 
-$$T = \{(\alpha, \beta) : \alpha > 0,\; \beta > 0,\; \alpha + \beta < \pi/4\}$$
+$$T = \lbrace{}(\alpha, \beta) : \alpha > 0,\; \beta > 0,\; \alpha + \beta < \pi/4\rbrace{}$$
 
 via the identity $\arctan\!\bigl(\tfrac{1-u}{1+u}\bigr) = \tfrac{\pi}{4} - \arctan u$.  The Jacobian is $du\,dv = \sec^2\!\alpha\;\sec^2\!\beta\;d\alpha\,d\beta$.
 
 ### 2.3 Sectors
 
-Let $a_1, c_1$ denote the most-significant non-trivial bits of $u$ and $v$ respectively ($a_1 = \lfloor 2u \rfloor$, $c_1 = \lfloor 2v \rfloor$).  The four **sectors** are $(a_1, c_1) \in \{(0,0), (0,1), (1,0), (1,1)\}$, with counts $N_{a_1 c_1}(K)$ among the D-odd pairs.
+Let $a_1, c_1$ denote the most-significant non-trivial bits of $u$ and $v$ respectively ($a_1 = \lfloor 2u \rfloor$, $c_1 = \lfloor 2v \rfloor$).  The four **sectors** are $(a_1, c_1) \in \lbrace{}(0,0), (0,1), (1,0), (1,1)\rbrace{}$, with counts $N_{a_1 c_1}(K)$ among the D-odd pairs.
 
 ### 2.4 The Val Function
 
@@ -91,11 +91,11 @@ Let $L = 2K - 1$ denote the bit-length of the product for D-odd pairs ($P \in [2
 
 **Schoolbook val** (fixed position):
 
-$$\mathrm{val}_{\mathrm{sch}} = 2\,\mathrm{carry}[L-2] - 1 \in \{-1, +1\}.$$
+$$\mathrm{val}_{\mathrm{sch}} = 2\,\mathrm{carry}[L-2] - 1 \in \lbrace{}-1, +1\rbrace{}.$$
 
 **Cascade val** (first-passage): let
 
-$$M_{\mathrm{stop}} = \max\{m \leq L : \mathrm{carry}[m] > 0\}$$
+$$M_{\mathrm{stop}} = \max\lbrace{}m \leq L : \mathrm{carry}[m] > 0\rbrace{}$$
 
 be the topmost nonzero carry position, scanning from position $L$ downward; then
 
@@ -111,9 +111,9 @@ summed over all contributing D-odd pairs.  (Not to be confused with the carry co
 
 ### 2.5 The Carry Transfer Operator
 
-The Holte carry transfer matrix for base $b = 2$ acts on carry states $c \in \{0, 1\}$:
+The Holte carry transfer matrix for base $b = 2$ acts on carry states $c \in \lbrace{}0, 1\rbrace{}$:
 
-$$K_{\mathrm{Holte}}(c' \mid c) = \frac{1}{b^2}\,\mathrm{card}\{(a,d) \in \{0,\ldots,b-1\}^2 : \lfloor(a + d + c)/b\rfloor = c'\}.$$
+$$K_{\mathrm{Holte}}(c' \mid c) = \frac{1}{b^2}\,\mathrm{card}\lbrace{}(a,d) \in \lbrace{}0,\ldots,b-1\rbrace{}^2 : \lfloor(a + d + c)/b\rfloor = c'\rbrace{}.$$
 
 Its eigenvalues are $1$ and $1/b = 1/2$ [Holte 1997, A].  We model the macroscopic stationary state of the $L$-position carry chain as a spatial transfer operator on a path graph of $L$ sites.  By identifying the positional index $d$ with a spatial coordinate and imposing Dirichlet boundary conditions ($c_0 = 0$ at the LSB and $c_L = 0$ from the D-odd constraint), the spectrum of the unperturbed spatial operator is
 
@@ -408,7 +408,7 @@ $$\sum_{m\;\mathrm{odd}} \alpha^m = \alpha/(1-\alpha^2)$$
 
 yielding a rational function of $\alpha$, rather than the conditionally convergent harmonic alternation — but the structural principle is the same: a character projection onto odd modes extracts $\pi$ from algebraic data.  The standard (unweighted) resolvent integral involves all harmonics and yields an irrational answer containing $\sqrt{\pi+1}$; the $\chi_4$ projection selects a subset whose alternating sum collapses to a rational function of $\beta$, and hence of $\pi$ when $\beta = -\pi/(2+2\pi)$.
 
-**Remark.**  The Chebyshev orthogonality $\sum_{k=1}^{L-1} \sin(n\pi k/L)\sin(m\pi k/L) = (L/2)\delta_{nm}$ requires $L \equiv 0 \pmod{4}$ to ensure that the character $\chi_4(n) = \sin(n\pi/2)$ is exactly representable on the lattice $\{k/L : k = 0, \ldots, L-1\}$.  For general $L$, a boundary correction of order $O(1/L)$ arises.  Since $L = 2K - 1$ is odd for all $K$, the exact orthogonality never holds at finite $K$; the correction is $O(1/K)$ and vanishes in the sector-ratio limit $K \to \infty$.
+**Remark.**  The Chebyshev orthogonality $\sum_{k=1}^{L-1} \sin(n\pi k/L)\sin(m\pi k/L) = (L/2)\delta_{nm}$ requires $L \equiv 0 \pmod{4}$ to ensure that the character $\chi_4(n) = \sin(n\pi/2)$ is exactly representable on the lattice $\lbrace{}k/L : k = 0, \ldots, L-1\rbrace{}$.  For general $L$, a boundary correction of order $O(1/L)$ arises.  Since $L = 2K - 1$ is odd for all $K$, the exact orthogonality never holds at finite $K$; the correction is $O(1/K)$ and vanishes in the sector-ratio limit $K \to \infty$.
 
 ### Step 3: The Weierstrass Integral (Continuous Verification)
 
@@ -575,7 +575,7 @@ so
 
 $$\lfloor\mathrm{carry}[L-2]/2\rfloor = 0$$
 
-allows $\mathrm{carry}[L-2] \in \{0, 1\}$.
+allows $\mathrm{carry}[L-2] \in \lbrace{}0, 1\rbrace{}$.
 
 Sector $(1,1)$ is D-odd impossible.  With $a_1 = b_1 = 1$: $\mathrm{conv}[L-2] = 2$, and $\lfloor(c + 2)/2\rfloor = 0$ has no solution for $c \geq 0$.
 
@@ -622,7 +622,7 @@ $$A^{\ast} = \frac{2 + 3\pi}{2(1+\pi)}$$
 
 The microscopic mechanism is now understood (§8.5): the D-odd constraint $\mathrm{carry}[L] = 0$ propagates backward through the carry chain, creating rigid structural exclusions (sector $(1,0)$ blocked at depth $j = 2$; Table 4) and universal per-depth stopping constants.  The remaining step is to evaluate the Doob $h$-transform (bridge process) of the Holte–Diaconis–Fulman Markov chain conditioned on $\mathrm{carry}[L] = 0$, i.e., the stationary distribution $\pi_{\mathrm{bridge}}(c)$ of the carry entering the boundary layer.  Specifically:
 
-1. *Holte bridge:* Compute the carry distribution at position $L - j$ for the Markov chain on $\{0, 1, \ldots\}$ started from $\mathrm{carry}[0] = 0$ and conditioned to return to $0$ at position $L$, in the limit $L \to \infty$.
+1. *Holte bridge:* Compute the carry distribution at position $L - j$ for the Markov chain on $\lbrace{}0, 1, \ldots\rbrace{}$ started from $\mathrm{carry}[0] = 0$ and conditioned to return to $0$ at position $L$, in the limit $L \to \infty$.
 2. *Boundary filter:* Propagate $\pi_{\mathrm{bridge}}(c)$ through the exact exclusion operators of §8.5 (the backward-tree DP of E224b), obtaining the universal stopping probabilities $P(j \mid \mathrm{sector})$ and expected values
 
 $$E[\mathrm{val} \mid j, \mathrm{sector}]$$
