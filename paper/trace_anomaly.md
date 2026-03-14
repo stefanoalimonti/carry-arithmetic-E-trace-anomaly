@@ -8,7 +8,7 @@
 
 ## Abstract
 
-We study the *sector ratio* $R(K)$ of D-odd products in base-2 multiplication with $K$-bit operands.  Exact enumeration for $K = 4$ through $K = 21$ ($2^{42}$ pair evaluations at $K = 21$; 18 data points) establishes the convergence pattern.  The schoolbook limit (fixed-position carry readout) yields an exact closed form $R_0 = (\tfrac{1}{2} - 2\ln\tfrac{4}{3})/(1 + \ln\tfrac{3}{8}) = -3.9312\ldots$, purely logarithmic in rational arguments.  The cascade limit (first-passage stopping-time readout) produces a correction $\Delta R = R - R_0$ that converges numerically to $+0.7896\ldots$, yielding
+We study the *sector ratio* $R(K)$ of D-odd products in base-2 multiplication with $K$-bit operands.  Exact enumeration for $K = 4$ through $K = 21$ (about $1.1 \times 10^{12}$ full pairs at $K = 21$; 18 data points) establishes the convergence pattern.  The schoolbook limit (fixed-position carry readout) yields an exact closed form $R_0 = (\tfrac{1}{2} - 2\ln\tfrac{4}{3})/(1 + \ln\tfrac{3}{8}) = -3.9312\ldots$, purely logarithmic in rational arguments.  The cascade limit (first-passage stopping-time readout) produces a correction $\Delta R = R - R_0$ that converges numerically to $+0.7896\ldots$, yielding
 
 $$R = R_0 + \Delta R \;\longrightarrow\; -\pi.$$
 
@@ -20,31 +20,62 @@ Under the LMH, the sector ratio is the closed-form Möbius transformation
 
 $$R = S(A) = \frac{2(1-A)}{3-2A}.$$
 
-The empirical convergence $R(K) \to -\pi$ then uniquely determines $A^{\ast} = (2 + 3\pi)/(2(1+\pi))$; independent measurement of $A_{\mathrm{eff}}(K)$ confirms this to $0.005\%$.  The proof proceeds via a shifted resolvent, whose continuous limit is the Weierstrass integral.  The discrete-to-continuous bridge is furnished by the Poisson kernel expansion, where the Dirichlet boundary condition imposed by the D-odd constraint projects the spectral sum onto the character $\chi_4(n) = \sin(n\pi/2)$, producing the Leibniz series $\pi/4 = 1 - 1/3 + 1/5 - \cdots$ in the $L \to \infty$ limit.  The key structural ingredient is **resolvent universality**: the spectral resolvent, applied to the true cascade profiles, converges to the same limit as the $\chi_4$ effective model — no single Fourier mode carries the $\pi$-content individually.
+The empirical convergence $R(K) \to -\pi$ then uniquely determines $A^{\ast} = (2 + 3\pi)/(2(1+\pi))$; inverting the same Möbius relation on the enumerated data yields an $A_{\mathrm{eff}}(K)$ sequence converging numerically to this value to $0.005\%$.  The proof proceeds via a shifted resolvent, whose continuous limit is the Weierstrass integral.  The discrete-to-continuous bridge is furnished by the Poisson kernel expansion, where the Dirichlet boundary condition imposed by the D-odd constraint projects the spectral sum onto the character $\chi_4(n) = \sin(n\pi/2)$, selecting, via a mechanism thematically analogous to the Leibniz series, the odd-mode component that carries the $\pi$-content in the $L \to \infty$ limit (the actual derivation uses a geometric/Poisson-kernel series, not the conditionally convergent Leibniz alternation; see §7).  The key structural ingredient is **resolvent universality**: the spectral resolvent, applied to the true cascade profiles, converges to the same limit as the $\chi_4$ effective model — no single Fourier mode carries the $\pi$-content individually.
 
-Three falsification results establish the LMH as the unique viable mechanism: (i) $\pi$ is not localized on the D-parity boundary curve (Observation 2, boundary falsification via interior/boundary decomposition through depth 12); (ii) the critical cell of the cascade has area $-3/16 + 7/4\ln(28/25)$, a rational combination of logarithms with no $\pi$ (Proposition 3); (iii) no diagonal perturbation of a cosine-spectrum operator can produce the Linear Mix — the trace obstruction (Observation 4, toy model failure).
+Three falsification results strongly support the LMH against the principal alternatives tested: (i) $\pi$ is not localized on the D-parity boundary curve (Observation 2, boundary falsification via interior/boundary decomposition through depth 12); (ii) the critical cell of the cascade has area $-3/16 + 7/4\ln(28/25)$, a rational combination of logarithms with no $\pi$ (Proposition 3); (iii) no diagonal perturbation of a cosine-spectrum operator can produce the Linear Mix — the trace obstruction (Observation 4, toy model failure).
 
-The derivation of $A^{\ast}$ from first principles remains the single open problem.
+The derivation of $A^{\ast}$ from first principles remains the central open problem in the shifted-resolvent formulation. In the companion stopping-time formulation [L], the same closure is sharpened to a scalar `χ₄ -> L(1,\chi_4)` constant together with preservation of the dominant conditioned 1/2 rate.
 
 ---
 
 ## 1. Introduction
 
-When two $K$-bit integers are multiplied in base 2, each partial product $a_i b_j$ contributes to a column sum, and the resulting carries propagate from least-significant to most-significant bit.  This carry chain is a Markov process whose spectral theory has been thoroughly studied [Holte 1997, Diaconis–Fulman 2009].
+When two $K$-bit integers are multiplied in base 2, each partial product $a_i b_j$ contributes to a column sum, and the resulting carries propagate from least-significant to most-significant bit. This carry chain is a Markov process whose spectral theory is developed in [A; Holte 1997, Diaconis-Fulman 2009]. The sector ratio $R(K) = \sigma_{10}/\sigma_{00}$ — a carry-weighted ratio across D-odd products grouped by the second-highest bit (see [P1] for the full introduction to sectors and carries) — converges numerically to $-\pi$. This paper identifies the analytical mechanism responsible for this convergence and reduces the full proof to a single spectral conjecture.
 
-A finer invariant arises when we condition on the product having an *odd number of bits* — the so-called D-odd products, where the product $(1+u)(1+v) < 2$ in the continuum limit.  The *sector ratio*
+### 1.1 Schoolbook vs. Cascade: Two Ways to Read a Carry Chain
 
-$$R(K) = \frac{\sum \mathrm{val}_{10}(K)}{\sum \mathrm{val}_{00}(K)}$$
+The sector ratio depends on *how* one reads the carry chain — a distinction that is central to this paper. Consider a specific D-odd pair: $X = 5$, $Y = 5$ ($K = 3$). Writing $5 = (101)_2$, the column sums are
 
-is the val-weighted ratio of D-odd cascade contributions in two specific sectors, distinguished by the second-most-significant bit of each operand (see §2.4 for the precise definition of val).
+$$\mathrm{conv}_0 = 1, \qquad \mathrm{conv}_1 = 0, \qquad \mathrm{conv}_2 = 2, \qquad \mathrm{conv}_3 = 0, \qquad \mathrm{conv}_4 = 1,$$
 
-The sector ratio $R(K)$ depends on *how* the carry information is read.  In the **schoolbook** (fixed-position) readout, the val function reads the carry at position $L - 2$ (the second-highest carry position, where $L = 2K - 1$).  In the **cascade** (first-passage stopping-time) readout, the val function scans downward through the carry chain and stops at the first position where a carry is nonzero.  The two readouts yield different limits; it is the cascade limit that converges numerically toward $-\pi$.
+so the carry bridge is:
 
-Extensive numerical computation (exact enumeration for $K = 4$ through $K = 21$, requiring up to $2^{42}$ pair evaluations at $K = 21$) reveals a striking convergence [P1]:
+```
+Position j:     0     1     2     3     4     5
+Carry c_j:      0     0     0     1     0     0
+                                  ▲
+                            highest nonzero carry
+```
+
+(The product $5 \times 5 = 25 = (11001)_2$ has $L = 2K - 1 = 5$ bits, so $c_0 = c_5 = 0$: a carry bridge.)
+
+**Schoolbook readout:** Read the carry at the *fixed* position $L - 2 = 3$:
+
+$$\mathrm{val}_{\mathrm{sch}} = 2 \cdot c_3 - 1 = 2 \cdot 1 - 1 = +1$$
+
+**Cascade readout:** Scan from the top, find the highest nonzero carry ($M_{\mathrm{stop}} = 3$), then read one position below:
+
+$$M_{\mathrm{stop}} = 3, \qquad \mathrm{val}_{\mathrm{casc}} = c_{M_{\mathrm{stop}} - 1} - 1 = c_2 - 1 = 0 - 1 = -1$$
+
+Even in this tiny example, the two readouts already disagree: the fixed-position schoolbook value is $+1$, while the stopping-time cascade value is $-1$. For larger multiplications, this discrepancy organizes into a complex boundary layer near the top. The schoolbook readout produces a limit $R_0 = -3.931\ldots$ (purely logarithmic, no $\pi$). The cascade readout produces a different limit $R = R_0 + \Delta R$ — and it is $\Delta R = +0.790\ldots$ that carries the transcendental content, giving $R \to -\pi$.
+
+```
+                         R₀ = −3.931...       R = −π = −3.14159...
+                              │                      │
+   ◄─────────────────────────────────────────────────────────►
+                              │     ΔR = +0.790      │
+                              │◄────────────────────►│
+                         schoolbook              cascade
+                     (no π, logarithmic)      (contains π)
+```
+
+### 1.2 The Central Question
+
+Extensive numerical computation (exact enumeration for $K = 4$ through $K = 21$, requiring up to about $1.1 \times 10^{12}$ full pairs at $K = 21$) reveals the convergence [P1]:
 
 $$R(K) \;\longrightarrow\; -\pi \qquad (K \to \infty) \quad \text{(Conjecture 1, [P1])}.$$
 
-The emergence of a transcendental constant from a purely combinatorial process — counting carry patterns in binary multiplication — is unexpected.  This paper identifies the analytical mechanism and reduces the full proof to a single spectral conjecture.
+The emergence of a transcendental constant from a purely combinatorial process — counting carry patterns in binary multiplication — is unexpected. This paper identifies the analytical mechanism and reduces the full proof to a single spectral conjecture.
 
 **Main results.**  Status labels are used uniformly as **Proved**, **Conditional**, and **Open target**.
 
@@ -54,13 +85,13 @@ $$R_0 = \frac{\tfrac{1}{2} - 2\ln\tfrac{4}{3}}{1 + \ln\tfrac{3}{8}} = -3.9312054
 
 identified by high-precision PSLQ and verified to 6 digits by exact enumeration.  Purely logarithmic — no $\pi$.
 
-2. **Theorem 1** (§7).  Under the LMH spectral form (Part I of Conjecture 1) with parameter $A$ and resolvent universality (Part II), $R = S(A) = 2(1-A)/(3-2A)$.  The empirical convergence $R(K) \to -\pi$ then pins down $A^{\ast} = (2+3\pi)/(2(1+\pi))$; independent measurement of $A_{\mathrm{eff}}(K)$ confirms this value to $0.005\%$.
+2. **Theorem 1** (§7).  Under the LMH spectral form (Part I of Conjecture 1) with parameter $A$ and resolvent universality (Part II), the physical ratio is modeled by $R = S(A) = 2(1-A)/(3-2A)$.  The empirical convergence $R(K) \to -\pi$ then pins down $A^{\ast} = (2+3\pi)/(2(1+\pi))$; inverting the same Möbius relation on the enumeration data yields an $A_{\mathrm{eff}}(K)$ sequence converging numerically to this value to $0.005\%$.
 
-3. **Observation 2, Proposition 3, Observation 4** (§5, §8).  All geometric and generic-operator explanations for the appearance of $\pi$ are falsified, establishing the LMH as the unique viable mechanism.
+3. **Observation 2, Proposition 3, Observation 4** (§5, §8).  The main geometric and generic-operator explanations for the appearance of $\pi$ are falsified, leaving the LMH as the leading mechanism among those tested.
 
 **Computational reproducibility.**  All experiments referenced in this paper (E215–E219, E223–E224b, E44, E45) are available as self-contained scripts in the companion repository `carry-arithmetic-E-trace-anomaly/experiments/`.  Python scripts (E215–E219, E223–E224b) perform exact enumeration for $K \leq 15$; C programs (E44, E45) extend to $K = 21$ with OpenMP parallelism.
 
-**Operator closure map (P1 Step3 bridge).**  Exact operator results (Step3A–Step3H; see [P1, §8]) support the same macro mechanism from a complementary angle: (i) carry/Witt operator conjugacy is exact in the base-2 prototype, (ii) the character-projected trace channel is exact and admits a closed-form generating function, and (iii) the D-odd nonstationary stopping-time resolvent identity is exact under enumeration.  These results do not close Conjecture 1, but they reduce the remaining closure to two explicit points: a scalar `χ₄ -> L(1,χ₄)` constant and an analytic proof of preservation of the dominant `1/2` decay rate under D-odd conditioning.
+**Operator closure map (P1 Step3 bridge).**  Exact operator results (Step3A–Step3H; see [P1, §8]) support the same macro mechanism from a complementary angle: (i) carry/Witt operator conjugacy is exact in the base-2 prototype, (ii) the character-projected trace channel is exact and admits a closed-form generating function, and (iii) the D-odd nonstationary stopping-time resolvent identity is exact under enumeration.  In [L], this stopping-time channel is realized as a canonical weighted first-return resolvent object and exhibits a corrected-L² law on $\mathrm{Re}(s) > 1$.  These results do not close Conjecture 1, but they sharpen the remaining closure to two explicit points: a scalar `χ₄ -> L(1,χ₄)` constant and an analytic proof of preservation of the dominant `1/2` decay rate under D-odd conditioning.  The same companion analysis shows that the current carry-side object is zero-free in the tested critical-strip box and admits no simple gamma-like completion there, so the missing ingredient is a genuine phase/completion mechanism.
 
 
 ---
@@ -115,7 +146,7 @@ The Holte carry transfer matrix for base $b = 2$ acts on carry states $c \in \lb
 
 $$K_{\mathrm{Holte}}(c' \mid c) = \frac{1}{b^2}\,\mathrm{card}\lbrace{}(a,d) \in \lbrace{}0,\ldots,b-1\rbrace{}^2 : \lfloor(a + d + c)/b\rfloor = c'\rbrace{}.$$
 
-Its eigenvalues are $1$ and $1/b = 1/2$ [Holte 1997, A].  We model the macroscopic stationary state of the $L$-position carry chain as a spatial transfer operator on a path graph of $L$ sites.  By identifying the positional index $d$ with a spatial coordinate and imposing Dirichlet boundary conditions ($c_0 = 0$ at the LSB and $c_L = 0$ from the D-odd constraint), the spectrum of the unperturbed spatial operator is
+Its eigenvalues are $1$ and $1/b = 1/2$ [Holte 1997, A].  We model the macroscopic stationary state of the carry chain as a spatial transfer operator on a path graph of $L$ interior sites ($d = 1, \ldots, L$), with Dirichlet walls at $d = 0$ and $d = L + 1$.  (The physical constraint $c_L = 0$ is placed at $L + 1$ rather than $L$; this $O(1)$ offset does not affect the $L \to \infty$ limit and simplifies the eigenbasis.)  The spectrum of the unperturbed spatial operator is
 
 $$\lambda_n^{(0)} = \frac{1}{2}\cos\!\left(\frac{n\pi}{L+1}\right), \quad n = 1, \ldots, L, \qquad \phi_n(k) = \sin\!\left(\frac{n\pi k}{L+1}\right).$$
 
@@ -261,9 +292,9 @@ is equivalent to the $\chi_4$ effective model:
 
 $$R_{\mathrm{recon}}(K) \;=\; \frac{\sum_n w_n^{(10)} \, G_n \, / \, (1 - \lambda_n)}{\sum_n w_n^{(00)} \, G_n \, / \, (1 - \lambda_n)} \;\longrightarrow\; \frac{\sum_n \chi_4(n) \, G_n \, / \, (1 - \lambda_n)}{\sum_n G_n \, / \, (1 - \lambda_n)}$$
 
-where $G_n = \sum_d \sin(n\pi d/D)$ is the spatial integration weight, $\lambda_n = \lambda_n(A)$ are the LMH eigenvalues for the (as yet unspecified) parameter $A$, and $\chi_4(n) = \sin(n\pi/2)$ is the non-principal Dirichlet character mod 4.  The individual mode ratios $w_n^{(10)}/w_n^{(00)}$ need not converge to any fixed value; the resolvent structure itself is the universality mechanism that filters the erratic microscopic profiles into the $\chi_4$ effective model.
+where, writing $N = L+1 = 2K$, $G_n = \sum_{d=1}^{N-1} \sin(n\pi d/N)$ is the spatial integration weight, $\lambda_n = \lambda_n(A)$ are the LMH eigenvalues for the (as yet unspecified) parameter $A$, and $\chi_4(n) = \sin(n\pi/2)$ is the non-principal Dirichlet character mod 4.  The individual mode ratios $w_n^{(10)}/w_n^{(00)}$ need not converge to any fixed value; the resolvent structure itself is the universality mechanism that filters the erratic microscopic profiles into the $\chi_4$ effective model.
 
-Determination of $A^{\ast}$. The value of $A$ is not assumed — it is *determined* by Theorem 1 (§7). Under Parts I and II, $R = S(A) = 2(1-A)/(3-2A)$. Since the data shows $R(K) \to -\pi$ [P1], the unique consistent value is $A^{\ast} = (2 + 3\pi)/(2(1+\pi)) = 1.3793\ldots$ Independent measurement of $A_{\mathrm{eff}}(K)$ via the inverse formula $A = (2-3R)/(2(1-R))$ applied to the enumeration data confirms convergence to $A^{\ast}$ (Table 1, §6.1).
+Determination of $A^{\ast}$. The value of $A$ is not assumed — it is *determined* by Theorem 1 (§7). Under Parts I and II, $R = S(A) = 2(1-A)/(3-2A)$. Since the data shows $R(K) \to -\pi$ [P1], the unique consistent value is $A^{\ast} = (2 + 3\pi)/(2(1+\pi)) = 1.3793\ldots$ Inverting this relation on the enumerated $R(K)$ data yields $A_{\mathrm{eff}}(K)$, which converges to $A^{\ast}$ (Table 1, §6.1) — an internal consistency check of the LMH ansatz (see §6.1 for discussion).
 
 **Remark (The resolvent as spectral filter).**  For any finite $K$, the cascade stopping distribution is a complex functional of the carry profile, heavily skewed toward the top of the product (§8.3).  The per-sector sine projections are far from proportional to $\chi_4$, and the mode-by-mode ratio $w_n^{(10)}/w_n^{(00)}$ varies wildly — even the fundamental mode ($n=1$) ratio overshoots $-\pi$ at $K \geq 15$ and continues to diverge (reaching $-4.22$ at $K = 21$; see Table 3).  Nevertheless, the resolvent reconstruction $R_{\mathrm{recon}}$ tracks $-\pi$ with oscillatory convergence, achieving a near-hit of $|R_{\mathrm{recon}} + \pi| = 0.001$ at $K = 19$ before overshooting (Table 3).  The resolvent achieves this by combining all Fourier modes with weights $G_n/(1-\lambda_n)$ that are precisely tuned to the LMH eigenvalue structure, producing tight oscillation around $-\pi$ despite erratic individual-mode behavior.  This is analogous to how a matched filter in signal processing extracts a deterministic signal from noise: the carry chain "knows" $\pi$ not through any single vibrational mode, but through the spectral structure of its transfer operator.
 
@@ -277,7 +308,7 @@ $$S(A) = \sum_{n\;\mathrm{odd}} \frac{\chi_4(n)}{1 - \lambda_n(A)} = \frac{2(1-A
 
 This is proved for general $A$ in §7.  The determination $A = A^{\ast}$ follows from the Phase Transition Formula and the empirical limit $R \to -\pi$, as described above.
 
-**Remark (Non-circularity and independent verification).**  The determination of $A^{\ast}$ via $S(A) = -\pi$ may appear circular — the target value $-\pi$ is used to solve for $A^{\ast}$, which then enters the operator whose spectral sum is claimed to equal $-\pi$.  We address this concern with three arguments.
+**Remark (Non-circularity and consistency check).**  The determination of $A^{\ast}$ via $S(A) = -\pi$ may appear circular — the target value $-\pi$ is used to solve for $A^{\ast}$, which then enters the operator whose spectral sum is claimed to equal $-\pi$.  We address this concern with three arguments.
 
 *(i) Structural content.*  The LMH is not a curve fit with one free parameter.  It is a structural hypothesis about the *form* of the carry operator:
 
@@ -288,10 +319,10 @@ This form has infinitely many testable consequences — the eigenvalue spacings,
 *(ii) Prediction-then-verification.*  The logical sequence is:
 1. **Derive** the closed form $S(A) = 2(1-A)/(3-2A)$ from the resolvent trace (§7).
 2. **Predict** $A^{\ast} = (2+3\pi)/(2(1+\pi)) = 1.37927\ldots$ by solving $S = -\pi$.
-3. **Measure** $A_{\mathrm{eff}}(K)$ from the independently computed $R(K)$ values via the inverse formula $A = (2-3R)/(2(1-R))$.
+3. **Measure** $A_{\mathrm{eff}}(K)$ from the enumerated $R(K)$ values via the inverse formula $A = (2-3R)/(2(1-R))$.
 4. **Verify** that $A_{\mathrm{eff}}(K) \to A^{\ast}$ with the predicted rate.
 
-Step 3 uses only the enumeration data $R(K)$ and the algebraic inverse — it requires no knowledge of $\pi$ or of the LMH.  The convergence $A_{\mathrm{eff}}(K) \to 1.37934$ (Aitken-extrapolated from $K = 19, 20, 21$), matching $A^{\ast} = 1.37927$ to $0.005\%$, is the independent verification.  A wrong structural hypothesis — say,
+Step 3 uses only the enumeration data $R(K)$ together with the algebraic inverse of the LMH Möbius relation — it does not use the target value $-\pi$ directly.  The convergence $A_{\mathrm{eff}}(K) \to 1.37934$ (Aitken-extrapolated from $K = 19, 20, 21$), matching $A^{\ast} = 1.37927$ to $0.005\%$, is therefore an internal consistency check of the LMH ansatz rather than an independent measurement of the operator.  A wrong structural hypothesis — say,
 
 $$\mathcal{K}_{\mathrm{eff}} = (1-A)\mathcal{K}_M + (A/3)I$$
 
@@ -323,7 +354,7 @@ $$R = S(A) = \frac{2(1-A)}{3 - 2A},$$
 
 a closed-form Möbius transformation in $A$, valid for all $A \neq 3/2$.
 
-**Corollary** (conditional; inherits hypotheses of Theorem 1). Under the LMH (both parts of Conjecture 1), the empirically observed convergence $R(K) \to -\pi$ (Conjecture 1 of [P1]) determines a unique parameter value $A^{\ast} = (2 + 3\pi)/(2(1+\pi)) = 1.3793\ldots$.  Conversely, if $A_{\mathrm{eff}}(K) \to A^{\ast}$ independently (§6.1, Table 1), then $R = -\pi$ follows.
+**Corollary** (conditional; inherits hypotheses of Theorem 1). Under the LMH (both parts of Conjecture 1), the empirically observed convergence $R(K) \to -\pi$ (Conjecture 1 of [P1]) determines a unique parameter value $A^{\ast} = (2 + 3\pi)/(2(1+\pi)) = 1.3793\ldots$.  Conversely, if the sequence $A_{\mathrm{eff}}(K)$ obtained by inverting the LMH Möbius relation converges to $A^{\ast}$ (§6.1, Table 1), then $R = -\pi$ follows within the same conditional framework.
 
 The proof has three steps.
 
@@ -347,25 +378,27 @@ This holds for all $A \neq 1$. The shifted point $z$ is real and depends only on
 
 ### Step 2: The Spectral Sum via the Poisson Kernel
 
-The D-odd constraint $\mathrm{carry}[D-1] = 0$ imposes Dirichlet boundary conditions on the carry chain at both endpoints ($c_0 = 0$ at the least-significant end, $c_D = 0$ from the D-odd condition).  The eigenvectors of $\mathcal{K}_{\mathrm{Markov}}$ on an $L$-site chain with these boundary conditions are the sine vectors [A] $\phi_n(k) = \sin(n\pi k/(L+1))$, $n = 1, \ldots, L$.
+The physical D-odd boundary condition is $\mathrm{carry}[L] = 0$, with $L = 2K - 1$ as in §2.4.  Following the shifted convention of §2.5, we represent this on an $L$-site interior chain with Dirichlet walls at $0$ and $N = L+1$.  The eigenvectors of $\mathcal{K}_{\mathrm{Markov}}$ are then the sine vectors [A]
+
+$$\phi_n(k) = \sin(n\pi k/N), \qquad n = 1, \ldots, L,\ \ k = 1, \ldots, L.$$
 
 The reward function $\mathcal{W}$ encodes the val contribution at each position.  By Part II of Conjecture 1 (Resolvent Universality), the resolvent-weighted spectral sum over the true cascade profiles converges to the same limit as the $\chi_4$ effective model, regardless of individual mode ratios.  To evaluate this common limit in closed form, we construct the effective model explicitly.
 
-The Effective $\chi_4$ Model.  The true microscopic cascade yields per-sector projections $w_n^{(ab)}$ that vary wildly across modes, and even the fundamental-mode ratio $w_1^{(10)}/w_1^{(00)}$ overshoots $-\pi$ and diverges (§8.3).  However, because (i) only odd-$n$ modes contribute to the spatial integral (the integration weight $G_n = \sum_d \sin(n\pi d/D) = 0$ for even $n$), and (ii) Part II posits equivalence of the resolvent-weighted limits for the true cascade profiles and the $\chi_4$ effective model, we may replace the true weights by the mathematically equivalent effective reward:
+The Effective $\chi_4$ Model.  The true microscopic cascade yields per-sector projections $w_n^{(ab)}$ that vary wildly across modes, and even the fundamental-mode ratio $w_1^{(10)}/w_1^{(00)}$ overshoots $-\pi$ and diverges (§8.3).  However, because (i) only odd-$n$ modes contribute to the spatial integral (the integration weight $G_n = \sum_{d=1}^{N-1} \sin(n\pi d/N)$ vanishes for even $n$), and (ii) Part II posits equivalence of the resolvent-weighted limits for the true cascade profiles and the $\chi_4$ effective model, we may replace the true weights by the mathematically equivalent effective reward:
 
 $$w_n^{\mathrm{eff}} = \chi_4(n) = \sin\!\left(\frac{n\pi}{2}\right)$$
 
-where $\chi_4$ is the non-principal Dirichlet character mod 4 (the unique primitive character with period 4).  This effective reward is the projection that a delta function at the midpoint $k = (L+1)/2$ of the chain would produce: $\phi_n((L+1)/2) = \sin(n\pi/2)$.  The substitution is justified by Part II of Conjecture 1, which posits equivalence of the resolvent-weighted limits for the true cascade profiles and the $\chi_4$ effective model; §8 provides independent empirical support for this equivalence.  Hence:
+where $\chi_4$ is the non-principal Dirichlet character mod 4 (the unique primitive character with period 4).  This effective reward is the projection that a delta function at the midpoint $k = N/2 = (L+1)/2$ of the chain would produce: $\phi_n(N/2) = \sin(n\pi/2)$.  The substitution is justified by Part II of Conjecture 1, which posits equivalence of the resolvent-weighted limits for the true cascade profiles and the $\chi_4$ effective model; §8 provides independent empirical support for this equivalence.  Hence:
 
 $$\mathrm{Tr}[\mathcal{W} \cdot (I - \mathcal{K}_{\mathrm{eff}})^{-1}] = \sum_{n=1}^{L} \frac{w_n}{1 - \lambda_n(A)} = \sum_{n\;\mathrm{odd}} \frac{\sin(n\pi/2)}{1 - \lambda_n(A)} \;=:\; S(A)$$
 
-where the even-$n$ terms vanish because $\sin(n\pi/2) = 0$ for even $n$, and $\lambda_n(A) = \tfrac{1}{2}\cos(n\pi/(L+1)) + A\sin^2(n\pi/(2(L+1)))$ for an $L$-site chain with Dirichlet walls at $0$ and $L+1$.
+where the even-$n$ terms vanish because $\sin(n\pi/2) = 0$ for even $n$, and $\lambda_n(A) = \tfrac{1}{2}\cos(n\pi/N) + A\sin^2(n\pi/(2N))$ for an $L$-site chain with Dirichlet walls at $0$ and $N = L+1$.
 
 **The bridge from discrete to continuous.**  Let $\beta = 1 - A$.  Then:
 
-$$\frac{1}{1 - \lambda_n} = \frac{2}{1 + \beta - \beta\cos(n\pi/(L+1))} = \frac{2}{1+\beta} \cdot \frac{1}{1 - r\cos\theta_n}$$
+$$\frac{1}{1 - \lambda_n} = \frac{2}{1 + \beta - \beta\cos(n\pi/N)} = \frac{2}{1+\beta} \cdot \frac{1}{1 - r\cos\theta_n}$$
 
-where $r = \beta/(1+\beta)$ and $\theta_n = n\pi/(L+1)$.
+where $r = \beta/(1+\beta)$ and $\theta_n = n\pi/N$.
 
 The Poisson kernel expansion gives:
 
@@ -398,7 +431,7 @@ This is the *unique* value of $A$ producing $S = -\pi$.
 
 Remark (The role of $\chi_4$ and the origin of $\pi$).  The factor $\sin(n\pi/2) = \chi_4(n)$ is the non-principal Dirichlet character mod 4: it equals $+1, 0, -1, 0$ for $n = 1, 2, 3, 4$ (period 4).  For odd $n$, it alternates as $+1, -1, +1, -1, \ldots$ for $n = 1, 3, 5, 7, \ldots$
 
-The Chebyshev orthogonality (Step 2) is the key structural mechanism.  After inserting the Poisson kernel into the $\chi_4$-weighted sum, we must evaluate $\sum_{k=0}^{N-1} (-1)^k \cos(m\theta_k)$ with $\theta_k = (2k+1)\pi/L$.  This sum vanishes for even $m$ and equals $\sec(m\pi/L)$ for odd $m$.  The $\chi_4$ character therefore **projects the Fourier expansion onto its odd harmonics only**, producing the geometric series .
+The Chebyshev orthogonality (Step 2) is the key structural mechanism.  After inserting the Poisson kernel into the $\chi_4$-weighted sum, we must evaluate $\sum_{k=0}^{N/2-1} (-1)^k \cos(m\theta_k)$ with $\theta_k = (2k+1)\pi/N$.  This sum vanishes for even $m$ and equals $\sec(m\pi/N)$ for odd $m$.  The $\chi_4$ character therefore **projects the Fourier expansion onto its odd harmonics only**, producing the geometric series
 
 $$\sum_{m\;\mathrm{odd}} \alpha^m = \alpha/(1-\alpha^2)$$
 
@@ -408,7 +441,7 @@ $$\sum_{m\;\mathrm{odd}} \alpha^m = \alpha/(1-\alpha^2)$$
 
 yielding a rational function of $\alpha$, rather than the conditionally convergent harmonic alternation — but the structural principle is the same: a character projection onto odd modes extracts $\pi$ from algebraic data.  The standard (unweighted) resolvent integral involves all harmonics and yields an irrational answer containing $\sqrt{\pi+1}$; the $\chi_4$ projection selects a subset whose alternating sum collapses to a rational function of $\beta$, and hence of $\pi$ when $\beta = -\pi/(2+2\pi)$.
 
-**Remark.**  The Chebyshev orthogonality $\sum_{k=1}^{L-1} \sin(n\pi k/L)\sin(m\pi k/L) = (L/2)\delta_{nm}$ requires $L \equiv 0 \pmod{4}$ to ensure that the character $\chi_4(n) = \sin(n\pi/2)$ is exactly representable on the lattice $\lbrace{}k/L : k = 0, \ldots, L-1\rbrace{}$.  For general $L$, a boundary correction of order $O(1/L)$ arises.  Since $L = 2K - 1$ is odd for all $K$, the exact orthogonality never holds at finite $K$; the correction is $O(1/K)$ and vanishes in the sector-ratio limit $K \to \infty$.
+**Remark.**  Writing $N = L + 1 = 2K$, the Chebyshev orthogonality $\sum_{k=1}^{N-1} \sin(n\pi k/N)\sin(m\pi k/N) = (N/2)\delta_{nm}$ requires $N \equiv 0 \pmod{4}$ (i.e., $K$ even) to ensure that the character $\chi_4(n) = \sin(n\pi/2)$ is exactly representable on the lattice $\lbrace{}k/N : k = 0, \ldots, N-1\rbrace{}$.  For $K$ odd ($N \equiv 2 \pmod{4}$), a boundary correction of order $O(1/N)$ arises; this is $O(1/K)$ and vanishes in the sector-ratio limit $K \to \infty$.
 
 ### Step 3: The Weierstrass Integral (Continuous Verification)
 
@@ -418,7 +451,7 @@ $$I(z) = \int_0^\pi \frac{dk}{z - \tfrac{1}{2}\cos k}$$
 
 with $z = -\tfrac{1}{2} - \tfrac{1}{\pi}$.  The Weierstrass substitution $t = \tan(k/2)$, $\cos k = (1-t^2)/(1+t^2)$, $dk = 2\,dt/(1+t^2)$ gives the standard form:
 
-$$\int_0^\pi \frac{dk}{a + b\cos k} = \frac{\pi}{\sqrt{a^2 - b^2}} \qquad (a^2 > b^2)$$
+$$\int_0^\pi \frac{dk}{a + b\cos k} = \frac{\operatorname{sgn}(a)\;\pi}{\sqrt{a^2 - b^2}} \qquad (|a| > |b|)$$
 
 with $a = z = -\tfrac{1}{2} - \tfrac{1}{\pi}$ and $b = -\tfrac{1}{2}$.  The discriminant is:
 
@@ -430,7 +463,7 @@ $$I(z) = -\frac{\pi^2}{\sqrt{\pi+1}}.$$
 
 This integral computes $\sum_n 1/(z - \lambda_n^{(0)})$ over *all* modes, without the $\chi_4$ weighting.  Its value is irrational ($\sqrt{\pi+1}$ appears).  The weighted sum $S(A^{\ast})$ selects only odd-$n$ modes with alternating signs, and via the Poisson kernel derivation above, this selection rationalizes the answer to $S = 2\beta/(1+2\beta) = -\pi$.
 
-**The bridge between the two.**  The discrete $\chi_4$-weighted sum and the continuous Weierstrass integral are related by the Poisson summation formula (or equivalently, the Chebyshev orthogonality identity).  The unweighted integral encodes the *density of states* of the Markov operator; the $\chi_4$ projection extracts the *odd-parity component* of this density, which is the component relevant to the D-odd boundary condition.  The remarkable fact is that while the full density involves $\sqrt{\pi+1}$, the odd-parity projection simplifies to a rational function of $\pi$.  This simplification is structurally identical to the Leibniz phenomenon: $\sum 1/n^2 = \pi^2/6$ (all modes, irrational coefficient), while $\sum (-1)^{n+1}/n = \ln 2$ (alternating, algebraic) — the character projection transmutes the transcendental content. $\square$
+**The bridge between the two.**  The discrete $\chi_4$-weighted sum and the continuous Weierstrass integral are related by the Poisson summation formula (or equivalently, the Chebyshev orthogonality identity).  The unweighted integral encodes the *density of states* of the Markov operator; the $\chi_4$ projection extracts the *odd-parity component* of this density, which is the component relevant to the D-odd boundary condition.  The remarkable fact is that while the full density involves $\sqrt{\pi+1}$, the odd-parity projection simplifies to a rational function of $\pi$.  This simplification is structurally identical to the Leibniz phenomenon: $\sum 1/n^2 = \pi^2/6$ (all modes, irrational coefficient), while $\sum (-1)^{n+1}/n = \ln 2$ (alternating, no $\pi$-content) — the character projection transmutes the transcendental content. $\square$
 
 
 ---
@@ -441,7 +474,7 @@ This section presents the experimental evidence supporting Part II of Conjecture
 
 ### 8.1 The Dirichlet Boundary Necessity (E218)
 
-The D-odd condition ($\mathrm{carry}[D-1] = 0$) imposes Dirichlet boundary conditions on the carry chain.  For D-even products ($\mathrm{carry}[D] = 0$ but $\mathrm{carry}[D-1]$ unconstrained), the carry chain is "full" — carries propagate to the top without interruption.  Consequently:
+The D-odd condition ($\mathrm{carry}[L] = 0$, where $L = 2K - 1$ as in §2.4) imposes Dirichlet boundary conditions on the carry chain.  For D-even products (the carry chain extends one position further and $\mathrm{carry}[L]$ is unconstrained), the carry chain is "full" — carries propagate to the top without interruption.  Consequently:
 
 - The cascade readout
 
@@ -464,7 +497,7 @@ $$\eta(K) \approx 1.000 \quad \text{for all } K.$$
 
 No decay.  The even and odd spectral energies are equal to three significant digits.  The resolvent-weighted version $\eta_R(K)$ also converges to $1$, not to $0$.  The "parity decay" universality hypothesis is *definitively falsified*.
 
-**Why parity is nonetheless irrelevant.**  The spatial integration weight $G_n = \sum_{d=1}^{D-1} \sin(n\pi d / D)$ vanishes identically for even $n$ (a property of the sine function over a full half-period).  Even modes do not contribute to the macroscopic observable
+**Why parity is nonetheless irrelevant.**  The spatial integration weight $G_n = \sum_{d=1}^{N-1} \sin(n\pi d / N)$ vanishes identically for even $n$ (a property of the sine function over a full half-period).  Even modes do not contribute to the macroscopic observable
 
 $$R = \sigma_{10,\mathrm{tot}} / \sigma_{00,\mathrm{tot}}$$
 
@@ -559,7 +592,7 @@ Structural exclusion at $j = 2$.  The exclusion $P(2 \mid 10) = 0$ is a rigorous
 
 $$\mathrm{conv}[L-2] = a_1 b_0 + a_0 b_1,$$
 
-where $a_0 = b_0 = 1$ (leading bits).  In sector $(1,0)$: $a_1 = 1, b_1 = 0$, so
+where $a_0 = b_0 = 1$ (leading bits, writing $b_j$ for the second operand's digits as distinct from the sector label $c_1$ of §2.3).  In sector $(1,0)$: $a_1 = 1, c_1 = 0$ (i.e., $b_1 = 0$), so
 
 $$\mathrm{conv}[L-2] = 1.$$
 
@@ -599,7 +632,7 @@ We have established a conditional spectral framework together with strong numeri
 3. The emergence of $\pi$ requires the Dirichlet boundary structure imposed by D-odd parity; D-even products yield a degenerate cascade and a purely logarithmic schoolbook limit (§8.1).
 4. The true universality mechanism is *resolvent universality*: the resolvent-weighted spectral sum of the actual cascade profiles tracks $-\pi$ with oscillatory convergence, achieving a near-hit of $|R_{\mathrm{recon}} + \pi| = 0.001$ at $K = 19$ (§8.3, Table 3).  The effective spectral parameter $A_{\mathrm{eff}}(K)$ converges to $A^{\ast}$ with Aitken-extrapolated accuracy of $0.005\%$ at $K = 21$.
 5. The LMH is non-trivial: no generic cutoff operator produces it (Observation 4 + Lemma 4, §8.4).
-6. The microscopic mechanism is identified: the D-odd constraint imposes rigid structural exclusions on the boundary carry positions — in particular, cascade stopping at depth $j = 2$ is impossible in sector 10, and sector 11 is entirely excluded.  These exclusions, combined with universal per-depth stopping probabilities $P(j \mid \text{sector})$, are proven analytically via the backward-tree DP (§8.5, Table 4).
+6. The microscopic mechanism is identified: the D-odd constraint imposes rigid structural exclusions on the boundary carry positions — in particular, cascade stopping at depth $j = 2$ is impossible in sector 10, and sector 11 is entirely excluded.  These structural exclusions are proven analytically via the backward-tree DP (§8.5); the per-depth stopping probabilities $P(j \mid \text{sector})$ are measured by exact enumeration (Table 4) and converge rapidly with $K$.
 7. The transcendental constant $\pi$ resides in the *cascade dynamics*, not in the counting geometry: the sector count ratio $n_{00}/n_{10}$ converges to an algebraic constant $\approx 3.126$, not to $\pi$ (§9.2).
 
 ### 9.2 The Trace Anomaly is Dynamical, Not Geometric
@@ -684,7 +717,7 @@ The falsification of the geometric hypothesis ($n_{00}/n_{10} \not\to \pi$, §9.
 
 2. **Two-point convergence scaling** (Appendix C) applied to $R(K)$ at $K = 20, 21$ yields $R_\infty \approx -3.14$; Aitken $\Delta^2$ acceleration on $f(d)$ gives $\sum f \approx 7 \times 10^{-6}$.  The identification $R = -\pi$ is not based on the raw $R(21) = -3.133$ alone.
 
-3. The $A_{\mathrm{eff}}$ convergence (§6.1, Appendix A.2) provides an independent check: the spectral parameter extracted from $R(K)$ converges to $A^{\ast} = (2+3\pi)/(2(1+\pi))$ with Aitken-extrapolated value $1.37934$ (from $K = 19, 20, 21$), within $0.005\%$ of $A^{\ast} = 1.37927$.
+3. The $A_{\mathrm{eff}}$ convergence (§6.1, Appendix A.2) provides an internal consistency check of the LMH ansatz: the spectral parameter extracted from $R(K)$ converges to $A^{\ast} = (2+3\pi)/(2(1+\pi))$ with Aitken-extrapolated value $1.37934$ (from $K = 19, 20, 21$), within $0.005\%$ of $A^{\ast} = 1.37927$.
 
 ### A.2 Effective Spectral Parameter
 

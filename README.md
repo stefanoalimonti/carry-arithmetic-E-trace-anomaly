@@ -11,13 +11,13 @@ Numerically, the cascade sector ratio $R(K) = \sum \mathrm{val}_{10} / \sum \mat
 Key results:
 - **Proposition 1** (unconditional): Schoolbook limit $R_0 = -3.9312\ldots$ (exact logarithmic form)
 - **Theorem 1** (conditional on LMH): $R = -\pi$ via shifted resolvent at $z = -1/2 - 1/\pi$
-- **Propositions 2–4**: Falsification of geometric/boundary hypotheses for $\pi$
+- **Observation 2, Proposition 3, Observation 4**: Falsification of the main geometric and generic-operator alternatives for $\pi$
 
 ## Status
 
-- **Proved:** Proposition 1, Propositions 2–4, exact structural falsifications.
+- **Proved:** Proposition 1, Observation 2, Proposition 3, Observation 4, and the associated structural falsifications.
 - **Conditional:** Theorem 1 via LMH + resolvent universality.
-- **Open target:** same closure pair as P1: scalar `C=-4` in `R(∞)=C·L(1,χ₄)` and analytic `1/2`-rate preservation proof for D-odd conditioning.
+- **Open target:** same closure pair as P1: scalar `C=-4` in `R(∞)=C·L(1,χ₄)` and analytic `1/2`-rate preservation proof for D-odd conditioning. The companion paper [L] now realizes the mixed stopping-time channel as a canonical weighted first-return resolvent but still finds no zero-transfer or simple completion mechanism.
 
 Paper complete. The LMH (Conjecture 1) is the only open component. The carry-Dirichlet extension to L²(s,χ₄) is in [L].
 
