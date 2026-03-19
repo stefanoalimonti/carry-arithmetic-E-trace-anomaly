@@ -48,6 +48,8 @@ proved in [P1, Theorem 1]. If the physical cascade ratio is governed by the LMH/
 
 Within the LMH model, as digit correlations increase from $A = 0$ to $A^*$, the spectral sum crosses zero and reaches $-\pi$. This places the model at distance $1/(2(\pi + 1)) \approx 0.121$ from the pole — remarkably close to divergence.
 
+![Phase transition: S(A) Möbius curve](../figures/fig_phase_transition.png)
+
 ---
 
 ## 4. Three Falsification Results

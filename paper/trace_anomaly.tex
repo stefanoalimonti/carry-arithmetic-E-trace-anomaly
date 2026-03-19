@@ -49,6 +49,19 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -111,6 +124,12 @@ non-Markovian carry transfer operator decomposes as
 Under the LMH, the sector ratio is the closed-form Möbius transformation
 
 \[R = S(A) = \frac{2(1-A)}{3-2A}.\]
+
+\begin{figure}
+\centering
+\includegraphics{../figures/fig_phase_transition.png}
+\caption{Phase transition: S(A) Möbius curve from +2/3 to −π}
+\end{figure}
 
 The empirical convergence \(R(K) \to -\pi\) then uniquely determines
 \(A^{\ast} = (2 + 3\pi)/(2(1+\pi))\); inverting the same Möbius relation on the
@@ -255,27 +274,26 @@ Purely logarithmic --- no \(\pi\).
 \end{enumerate}
 
 \textbf{Computational reproducibility.} All experiments referenced in this paper
-(E215--E219, E223--E224b, E44, E45) are available as self-contained scripts in
-the companion repository \texttt{carry-arithmetic-E-trace-anomaly/experiments/}.
-Python scripts (E215--E219, E223--E224b) perform exact enumeration for
-\(K \leq 15\); C programs (E44, E45) extend to \(K = 21\) with OpenMP
-parallelism.
+(E24, E32, E35, E36, E41, E42, E43, E215--E219, E223--E224b, E44, E45) are
+available as self-contained scripts in the companion repository
+\texttt{carry-arithmetic-E-trace-anomaly/experiments/}. Python scripts (E24,
+E32, E35, E36, E41, E42, E43, E215--E219, E223--E224b) perform exact enumeration
+and analytical computations; C programs (E44, E45) extend sector enumeration to
+\(K = 21\) with OpenMP parallelism.
 
-\textbf{Operator closure map (P1 Step3 bridge).} Exact operator results
-(Step3A--Step3H; see {[}P1, §8{]}) support the same macro mechanism from a
-complementary angle: (i) carry/Witt operator conjugacy is exact in the base-2
-prototype, (ii) the character-projected trace channel is exact and admits a
-closed-form generating function, and (iii) the D-odd nonstationary stopping-time
-resolvent identity is exact under enumeration. In {[}L{]}, this stopping-time
-channel is realized as a canonical weighted first-return resolvent object and
-exhibits a corrected-L² law on \(\mathrm{Re}(s) > 1\). These results do not
-close Conjecture 1, but they sharpen the remaining closure to two explicit
-points: a scalar \texttt{χ₄\ -\textgreater{}\ L(1,χ₄)} constant and an analytic
-proof of preservation of the dominant \texttt{1/2} decay rate under D-odd
-conditioning. The same companion analysis shows that the current carry-side
-object is zero-free in the tested critical-strip box and admits no simple
-gamma-like completion there, so the missing ingredient is a genuine
-phase/completion mechanism.
+\textbf{Operator closure map.} The companion results of {[}P1, §8{]} support the
+same macro mechanism from a complementary angle: (i) carry/Witt operator
+conjugacy is exact in the base-2 prototype, (ii) the character-projected trace
+channel is exact and admits a closed-form generating function, and (iii) the
+D-odd nonstationary stopping-time resolvent identity is exact under enumeration.
+In {[}L{]}, this stopping-time channel is realized as a canonical weighted
+first-return resolvent object exhibiting a corrected-\(L^2\) law on
+\(\mathrm{Re}(s) > 1\). These results sharpen the remaining closure to two
+explicit points: a scalar \(\chi_4 \to L(1,\chi_4)\) constant and an analytic
+proof of preservation of the dominant \(1/2\) decay rate under D-odd
+conditioning. The carry-side object is zero-free in the tested critical-strip
+box ({[}L, §5.1{]}) and admits no simple gamma-like completion, so the missing
+ingredient is a genuine phase/completion mechanism.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1406,6 +1424,23 @@ correction modes change sign as \(L\) increases. This is \emph{stronger}
 evidence for a spectral sum than monotone convergence would be, because
 Gibbs-type oscillation is the signature of a truncated Fourier/resolvent series,
 not of a simple Markov probability decay.
+
+\textbf{Open Problem 3 (Extension to general \(s\)).} \emph{Determine the
+analytic form of the coefficient \(B(s)\) in the critical-line decomposition}
+\[\mu_{\chi_4}(s) \approx c_{\mathrm{carry}} \cdot L(s, \chi_4) + B(s) \cdot L'(s, \chi_4),\]
+\emph{where
+\(c_{\mathrm{carry}} = \lim_{\sigma \to \infty} \tilde{c}(\sigma) \approx 0.0556 \approx 1/18\)
+and \(B(1/2+it) \sim 0.041 \cdot t^{-0.23}\) with \(B(\infty) \approx 0.012\).}
+Paper {[}L{]} extends the carry--\(\chi_4\) channel from a single scalar value
+to a meromorphic function of \(s\) on all of \(\operatorname{Re}(s) > 0\) (see
+{[}L, §7.4{]}). The spectral parameter \(A^{\ast}\) of the LMH manifests in this
+extension through the structure of the zeros of \(\mu_{\chi_4}\) on the critical
+line: the positions of the minima of \(|\mu_{\chi_4}(1/2 + it)|\) coincide with
+the zeros of \(L(s, \chi_4)\) and are topologically stable under
+\(K = 21 \to K = 999\) ({[}L, §5.5{]}; {[}P1, §9.5{]}). The link between
+\(A^{\ast}\) and the analytic form of \(B(s)\) --- for instance, whether
+\(B(s)\) arises from the resolvent \((I - T_{A^{\ast}})^{-1}\) restricted to the
+derivative sector --- remains open.
 
 \subsubsection{9.4 Broader Perspective}\label{broader-perspective}
 
